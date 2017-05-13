@@ -1,7 +1,9 @@
 from abc import ABCMeta, abstractmethod
 import re
 
-class ListExpr
+class ListExpr:
+	pass
+
 
 class ArithmeticExpr:
 	""" Do not call upon this class"""	
