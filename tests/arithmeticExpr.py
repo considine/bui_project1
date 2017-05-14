@@ -19,21 +19,39 @@ class TestArithmeticExpressions(unittest.TestCase):
 				multiplyer = MultiplicationExpr (i, j)
 				self.assertEqual(multiplyer.calc(), i * j)
 
+
+
 class TestUtilities(unittest.TestCase):
 	def testIsNumber(self):
 		for i in xrange(1000):
 			j =  (i - 500) / 10
-			self.assertEqual(Utility().isNumber(str(j)), True)
+			self.assertEqual(Utility.isNumber(str(j)), True)
 
-		self.assertEqual(Utility().isNumber("--5", False))
+		self.assertEqual(Utility.isNumber("--5"), False)
+
+class TestListTypes (unittest.TestCase):
+	def testIsEmpty(self):
+		lf = ListFactory(" ")
+		l = lf.getList()
+		self.assertEqual (l.checkType() == Utility.emptyType(), True)
+	def testIsNotEmpty(self):
+		lf = ListFactory("d")
+		l = lf.getList()
+		self.assertEqual (l.checkType() == Utility.nonEmptyType(), True)
+
+		lf = ListFactory("()")
+		l = lf.getList()
+		self.assertEqual (l.checkType() == Utility.nonEmptyType(), True)
+class TestArithmeticInput (unittest.TestCase):
+	def testProperMath(self):
+		interpreter = Interpreter("(* 40 45)")
+		self.assertEqual(interpreter.interpret(), 1800)
+
+		interpreter = Interpreter("( (* (+ 5 3) (- 3 5)))")
+		self.assertEqual(interpreter.interpret(), -16)
+
+
+
 if __name__ == "__main__":
 	unittest.main()
-	# multiplyer = MultiplicationExpr(5, 3)
-	# print multiplyer.calc()
-
-	# subtracter = SubtractionExpr(5, 3)
-	# print subtracter.calc()
-
-	# divider = DivisionExpr(5, 3)
-	# print divider.calc()
 
