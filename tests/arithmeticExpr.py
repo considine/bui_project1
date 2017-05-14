@@ -50,7 +50,19 @@ class TestArithmeticInput (unittest.TestCase):
 		interpreter = Interpreter("( (* (+ 5 3) (- 3 5)))")
 		self.assertEqual(interpreter.interpret(), -16)
 
+class TestListAndArithmetic (unittest.TestCase):
+	def testJustList(self):
+		interpreter = Interpreter('(car List(1 5 3 2 3 2))')
+		self.assertEqual(interpreter.interpret(), '1')
 
+		interpreter = Interpreter('(car (ctr List(1 5 3 2 3 2)))')
+		self.assertEqual(interpreter.interpret(), '5')
+
+		interpreter = Interpreter('(car (ctr ( ctr List(1 5 3 2 3 2))))')
+		self.assertEqual(interpreter.interpret(), '3')
+	def testCompoundListAndArithmetic (self):
+		interpreter = Interpreter('(+ 5 (car List(1 5 3 2 3 2)))')
+		self.assertEqual(interpreter.interpret(), 6)
 
 if __name__ == "__main__":
 	unittest.main()

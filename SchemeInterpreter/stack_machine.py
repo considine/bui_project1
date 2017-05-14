@@ -75,7 +75,16 @@ class LispNonemptyList(LispList):
 		its = self.listString.strip().split(" ")
 		itsLen = len(its)
 		lf = ListFactory(" ".join(its[1: itsLen]))
-		return lf.getList()
+		# replace strings
+		retString = re.sub(r' +', ",", str(lf.getList()))
+		
+		#replace List and opening and closing parens
+		retString = retString.replace("List", "")
+		retString = retString.strip()
+		retString = retString[1 : len(retString)-1]
+		return retString
+		
+
 
 
 
@@ -303,7 +312,7 @@ class Interpreter(object):
 				# print inner + " List(" +self.getListString() + ")"	
 				lstring = self.getListString()
 				lstring = re.sub(r' +', ",", lstring)
-				
+
 				return self.evalExpr(inner + " " +  lstring)
 
 
@@ -312,7 +321,7 @@ class Interpreter(object):
 			elif (nchar == "("):
 				self.openParens()
 				nchar = str(self.getExpr(self.numOpenParens - 1)) + " "
-
+				
 				
 				
 			inner += str(nchar)
@@ -359,12 +368,9 @@ class Expr (object):
 	pass
 if __name__ == '__main__':
 	
-	interpreter = Interpreter("(ctr List (3 5 2 3 2)))")
+	interpreter = Interpreter("(+ 5 (car (ctr (ctr  List (1 2 5 3)))))")
 	print interpreter.interpret()
 
 
-	
-	# it = LispNonemptyList("3 4 5")
 
-	# print it.ctr().ctr().car()
 
